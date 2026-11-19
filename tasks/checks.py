@@ -39,9 +39,20 @@ def check_long_B_colleague_request(env):
     return True, "3 MSFT shares bought and Catherine messaged"
 
 
+def check_long_C_watchlist_update(env):
+    wl = env.instances["TradingBot"].watch_list
+    if "NVDA" in wl or "AAPL" not in wl or "MSFT" not in wl:
+        return False, f"watchlist wrong: {wl[:6]}"
+    want = {"USR002": "Watchlist updated: AAPL and MSFT added, NVDA removed."}
+    if want not in env.instances["MessageAPI"].inbox:
+        return False, "exact message to Bob (USR002) not found"
+    return True, "watchlist updated and Bob messaged"
+
+
 CHECKS = {
     "long_A_budget_recall": check_long_A_budget_recall,
     "long_B_colleague_request": check_long_B_colleague_request,
+    "long_C_watchlist_update": check_long_C_watchlist_update,
 }
 
 

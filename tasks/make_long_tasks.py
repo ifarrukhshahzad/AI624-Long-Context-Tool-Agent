@@ -6,7 +6,8 @@ Why: even in BFCL's long-context mode most sessions are shorter than the project
 targets, so the spec asks for at least 5 extra tasks over the same backends that
 reach 16k-32k tokens through many calls and verbose outputs, each with a
 functional success check, and at least two needing a detail from early in the
-session. This file holds the first two (both are early-detail tasks).
+session. This file holds three: A and B are early-detail tasks, C is a long session
+whose final instruction is self-contained (tests long-context state tracking).
 
 Design note: in long-context mode get_stock_info returns ~31.7k tokens and
 get_transaction_history ~49.3k tokens (exact Qwen3 tokenizer counts), so a
@@ -100,6 +101,39 @@ TASKS = [
              "message_login(user_id='USR001')",
              "get_user_id(user='Catherine')",
              "send_message(receiver_id='USR003', message='Done - bought 3 shares as you asked.')"],
+        ],
+    },
+    {
+        "id": "long_C_watchlist_update",
+        "involved_classes": ["TradingBot", "MessageAPI"],
+        "initial_config": {},
+        "split": "dev",
+        "early_detail": "None (control task): every instruction is complete in its own turn; the "
+                        "difficulty is staying correct after ~20k tokens of verbose outputs.",
+        "question": [
+            user("Please log me into my trading account: username 'daniel_k', password 'edge624'."),
+            user("Show me all available stocks in the Technology sector."),
+            user("And all available stocks in the Automobile sector."),
+            user("Show me my current watchlist."),
+            user("What are the full details of my order 12345?"),
+            user("Remove NVDA from my watchlist, then add AAPL and MSFT to it."),
+            user("Show me the updated watchlist."),
+            user("Finally, log me into messaging with user ID USR004 and send Bob (user ID USR002) "
+                 "exactly this text: 'Watchlist updated: AAPL and MSFT added, NVDA removed.'"),
+        ],
+        "ground_truth": [
+            ["trading_login(username='daniel_k', password='edge624')"],
+            ["get_available_stocks(sector='Technology')"],
+            ["get_available_stocks(sector='Automobile')"],
+            ["get_watchlist()"],
+            ["get_order_details(order_id=12345)"],
+            ["remove_stock_from_watchlist(symbol='NVDA')",
+             "add_to_watchlist(stock='AAPL')",
+             "add_to_watchlist(stock='MSFT')"],
+            ["get_watchlist()"],
+            ["message_login(user_id='USR004')",
+             "send_message(receiver_id='USR002', message='Watchlist updated: AAPL and MSFT "
+             "added, NVDA removed.')"],
         ],
     },
 ]

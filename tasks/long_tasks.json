@@ -174,5 +174,94 @@
         "send_message(receiver_id='USR003', message='Done - bought 3 shares as you asked.')"
       ]
     ]
+  },
+  {
+    "id": "long_C_watchlist_update",
+    "involved_classes": [
+      "TradingBot",
+      "MessageAPI"
+    ],
+    "initial_config": {},
+    "split": "dev",
+    "early_detail": "None (control task): every instruction is complete in its own turn; the difficulty is staying correct after ~20k tokens of verbose outputs.",
+    "question": [
+      [
+        {
+          "role": "user",
+          "content": "Please log me into my trading account: username 'daniel_k', password 'edge624'."
+        }
+      ],
+      [
+        {
+          "role": "user",
+          "content": "Show me all available stocks in the Technology sector."
+        }
+      ],
+      [
+        {
+          "role": "user",
+          "content": "And all available stocks in the Automobile sector."
+        }
+      ],
+      [
+        {
+          "role": "user",
+          "content": "Show me my current watchlist."
+        }
+      ],
+      [
+        {
+          "role": "user",
+          "content": "What are the full details of my order 12345?"
+        }
+      ],
+      [
+        {
+          "role": "user",
+          "content": "Remove NVDA from my watchlist, then add AAPL and MSFT to it."
+        }
+      ],
+      [
+        {
+          "role": "user",
+          "content": "Show me the updated watchlist."
+        }
+      ],
+      [
+        {
+          "role": "user",
+          "content": "Finally, log me into messaging with user ID USR004 and send Bob (user ID USR002) exactly this text: 'Watchlist updated: AAPL and MSFT added, NVDA removed.'"
+        }
+      ]
+    ],
+    "ground_truth": [
+      [
+        "trading_login(username='daniel_k', password='edge624')"
+      ],
+      [
+        "get_available_stocks(sector='Technology')"
+      ],
+      [
+        "get_available_stocks(sector='Automobile')"
+      ],
+      [
+        "get_watchlist()"
+      ],
+      [
+        "get_order_details(order_id=12345)"
+      ],
+      [
+        "remove_stock_from_watchlist(symbol='NVDA')",
+        "add_to_watchlist(stock='AAPL')",
+        "add_to_watchlist(stock='MSFT')"
+      ],
+      [
+        "get_watchlist()"
+      ],
+      [
+        "message_login(user_id='USR004')",
+        "send_message(receiver_id='USR002', message='Watchlist updated: AAPL and MSFT added, NVDA removed.')"
+      ]
+    ]
   }
 ]
