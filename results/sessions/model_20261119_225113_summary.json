@@ -1,0 +1,21 @@
+[
+  {
+    "task": "multi_turn_long_context_122",
+    "mode": "model",
+    "turns": 4,
+    "turns_passed": 0,
+    "session_success": false,
+    "functional_check": "no functional check (BFCL state check only)",
+    "context_overflow": true,
+    "call_validity": null,
+    "final_context_chars": 13206,
+    "final_context_tokens": null,
+    "calls": 0,
+    "valid": 0,
+    "prompt_tokens": 0,
+    "prefill_ms": 0.0,
+    "decode_ms": 0.0,
+    "tool_ms": 0.0,
+    "llm_calls": 0
+  }
+]

@@ -1,0 +1,20 @@
+{
+  "name": "bf16",
+  "model": "/home/edge/models/qwen3-1.7b-bf16.gguf",
+  "model_bytes": 4069679488,
+  "llama_cpp_commit": "80d2c0c2c",
+  "settings": {
+    "model": "/home/edge/models/qwen3-1.7b-bf16.gguf",
+    "name": "bf16",
+    "prompts": "512,1024,2048",
+    "depths": "0,1024,2048",
+    "gen": 32,
+    "reps": 1,
+    "threads": 4,
+    "cooldown": 50.0,
+    "outdir": "results",
+    "dry_run": false
+  },
+  "started": "2026-11-19T20:26:44",
+  "finished": "2026-11-19T22:27:28"
+}

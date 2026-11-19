@@ -1,0 +1,7 @@
+test,tokens,depth,tok_per_s,stddev,avg_power_w,joule_per_token,start_temp_c,max_temp_c,throttle_flags,suspect,wall_s
+prefill,512,0,1.458,0.0,6.363,4.363,34.0,61.5,0x0,False,748.7
+prefill,1024,0,1.457,0.0,6.374,4.376,40.6,62.0,0x0,False,1406.6
+prefill,2048,0,1.452,0.0,6.36,4.379,42.2,62.0,0x0,False,2820.6
+decode,32,0,1.147,0.0,6.856,5.976,41.1,61.5,0x0,False,29.2
+decode,32,1024,1.099,0.0,6.927,6.304,41.1,63.7,0x0,False,733.6
+decode,32,2048,1.028,0.0,6.958,6.768,42.8,63.1,0x0,False,1442.6
