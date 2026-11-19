@@ -1,0 +1,20 @@
+{
+  "name": "f16",
+  "model": "/home/edge/models/qwen3-1.7b-f16.gguf",
+  "model_bytes": 4069679488,
+  "llama_cpp_commit": "80d2c0c2c",
+  "settings": {
+    "model": "/home/edge/models/qwen3-1.7b-f16.gguf",
+    "name": "f16",
+    "prompts": "512,2048,8192,16384",
+    "depths": "0,2048,8192,16384",
+    "gen": 32,
+    "reps": 1,
+    "threads": 4,
+    "cooldown": 50.0,
+    "outdir": "results",
+    "dry_run": false
+  },
+  "started": "2026-11-19T18:55:04",
+  "finished": "2026-11-19T20:07:00"
+}
