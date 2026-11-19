@@ -1,0 +1,286 @@
+{
+  "source": "BFCL_v4_multi_turn_long_context.json",
+  "backends": [
+    "TradingBot",
+    "MessageAPI"
+  ],
+  "tasks": [
+    {
+      "id": "multi_turn_long_context_100",
+      "backends": [
+        "TradingBot"
+      ],
+      "turns": 2,
+      "split": "dev"
+    },
+    {
+      "id": "multi_turn_long_context_101",
+      "backends": [
+        "MessageAPI",
+        "TradingBot"
+      ],
+      "turns": 3,
+      "split": "dev"
+    },
+    {
+      "id": "multi_turn_long_context_103",
+      "backends": [
+        "MessageAPI",
+        "TradingBot"
+      ],
+      "turns": 5,
+      "split": "dev"
+    },
+    {
+      "id": "multi_turn_long_context_104",
+      "backends": [
+        "TradingBot"
+      ],
+      "turns": 2,
+      "split": "test"
+    },
+    {
+      "id": "multi_turn_long_context_105",
+      "backends": [
+        "TradingBot"
+      ],
+      "turns": 2,
+      "split": "dev"
+    },
+    {
+      "id": "multi_turn_long_context_107",
+      "backends": [
+        "TradingBot"
+      ],
+      "turns": 5,
+      "split": "dev"
+    },
+    {
+      "id": "multi_turn_long_context_108",
+      "backends": [
+        "MessageAPI",
+        "TradingBot"
+      ],
+      "turns": 5,
+      "split": "dev"
+    },
+    {
+      "id": "multi_turn_long_context_111",
+      "backends": [
+        "MessageAPI",
+        "TradingBot"
+      ],
+      "turns": 4,
+      "split": "test"
+    },
+    {
+      "id": "multi_turn_long_context_113",
+      "backends": [
+        "MessageAPI",
+        "TradingBot"
+      ],
+      "turns": 2,
+      "split": "dev"
+    },
+    {
+      "id": "multi_turn_long_context_114",
+      "backends": [
+        "MessageAPI",
+        "TradingBot"
+      ],
+      "turns": 5,
+      "split": "dev"
+    },
+    {
+      "id": "multi_turn_long_context_115",
+      "backends": [
+        "TradingBot"
+      ],
+      "turns": 3,
+      "split": "dev"
+    },
+    {
+      "id": "multi_turn_long_context_116",
+      "backends": [
+        "TradingBot"
+      ],
+      "turns": 6,
+      "split": "test"
+    },
+    {
+      "id": "multi_turn_long_context_117",
+      "backends": [
+        "TradingBot"
+      ],
+      "turns": 6,
+      "split": "dev"
+    },
+    {
+      "id": "multi_turn_long_context_118",
+      "backends": [
+        "TradingBot"
+      ],
+      "turns": 5,
+      "split": "dev"
+    },
+    {
+      "id": "multi_turn_long_context_120",
+      "backends": [
+        "TradingBot"
+      ],
+      "turns": 3,
+      "split": "dev"
+    },
+    {
+      "id": "multi_turn_long_context_121",
+      "backends": [
+        "TradingBot"
+      ],
+      "turns": 4,
+      "split": "test"
+    },
+    {
+      "id": "multi_turn_long_context_122",
+      "backends": [
+        "TradingBot"
+      ],
+      "turns": 4,
+      "split": "dev"
+    },
+    {
+      "id": "multi_turn_long_context_123",
+      "backends": [
+        "TradingBot"
+      ],
+      "turns": 4,
+      "split": "dev"
+    },
+    {
+      "id": "multi_turn_long_context_126",
+      "backends": [
+        "TradingBot"
+      ],
+      "turns": 4,
+      "split": "dev"
+    },
+    {
+      "id": "multi_turn_long_context_127",
+      "backends": [
+        "TradingBot"
+      ],
+      "turns": 4,
+      "split": "test"
+    },
+    {
+      "id": "multi_turn_long_context_128",
+      "backends": [
+        "TradingBot"
+      ],
+      "turns": 4,
+      "split": "dev"
+    },
+    {
+      "id": "multi_turn_long_context_130",
+      "backends": [
+        "TradingBot"
+      ],
+      "turns": 5,
+      "split": "dev"
+    },
+    {
+      "id": "multi_turn_long_context_131",
+      "backends": [
+        "MessageAPI",
+        "TradingBot"
+      ],
+      "turns": 7,
+      "split": "dev"
+    },
+    {
+      "id": "multi_turn_long_context_132",
+      "backends": [
+        "TradingBot"
+      ],
+      "turns": 2,
+      "split": "test"
+    },
+    {
+      "id": "multi_turn_long_context_135",
+      "backends": [
+        "TradingBot"
+      ],
+      "turns": 4,
+      "split": "dev"
+    },
+    {
+      "id": "multi_turn_long_context_137",
+      "backends": [
+        "MessageAPI",
+        "TradingBot"
+      ],
+      "turns": 4,
+      "split": "dev"
+    },
+    {
+      "id": "multi_turn_long_context_138",
+      "backends": [
+        "MessageAPI",
+        "TradingBot"
+      ],
+      "turns": 5,
+      "split": "dev"
+    },
+    {
+      "id": "multi_turn_long_context_141",
+      "backends": [
+        "MessageAPI",
+        "TradingBot"
+      ],
+      "turns": 5,
+      "split": "test"
+    },
+    {
+      "id": "multi_turn_long_context_142",
+      "backends": [
+        "TradingBot"
+      ],
+      "turns": 5,
+      "split": "dev"
+    },
+    {
+      "id": "multi_turn_long_context_143",
+      "backends": [
+        "MessageAPI",
+        "TradingBot"
+      ],
+      "turns": 4,
+      "split": "dev"
+    },
+    {
+      "id": "multi_turn_long_context_145",
+      "backends": [
+        "MessageAPI",
+        "TradingBot"
+      ],
+      "turns": 5,
+      "split": "dev"
+    },
+    {
+      "id": "multi_turn_long_context_146",
+      "backends": [
+        "TradingBot"
+      ],
+      "turns": 4,
+      "split": "test"
+    },
+    {
+      "id": "multi_turn_long_context_149",
+      "backends": [
+        "MessageAPI",
+        "TradingBot"
+      ],
+      "turns": 5,
+      "split": "dev"
+    }
+  ]
+}
