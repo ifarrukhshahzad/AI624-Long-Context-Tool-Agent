@@ -42,8 +42,21 @@ def _read_jsonl(path):
         return [json.loads(line) for line in f if line.strip()]
 
 
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+CUSTOM_TASK_FILE = os.path.join(REPO_ROOT, "tasks", "long_tasks.json")
+
+
+def load_custom_tasks():
+    with open(CUSTOM_TASK_FILE, encoding="utf-8") as f:
+        return json.load(f)
+
+
 def load_task(task_id):
-    """Return (task, ground_truth_turns) for one BFCL long-context task id."""
+    """Return (task, ground_truth_turns). Ids starting with 'long_' are our own
+    tasks (tasks/long_tasks.json); everything else is a BFCL long-context task."""
+    if task_id.startswith("long_"):
+        task = next(t for t in load_custom_tasks() if t["id"] == task_id)
+        return task, task["ground_truth"]
     task = next(t for t in _read_jsonl(TASK_FILE) if t["id"] == task_id)
     answer = next(a for a in _read_jsonl(ANSWER_FILE) if a["id"] == task_id)
     return task, answer["ground_truth"]

@@ -1,0 +1,178 @@
+[
+  {
+    "id": "long_A_budget_recall",
+    "involved_classes": [
+      "TradingBot"
+    ],
+    "initial_config": {},
+    "split": "dev",
+    "early_detail": "Budget ($1,500), favourite company (Nvidia) and its price quote ($220.34) are only stated in turn 0; the final turn needs all three.",
+    "question": [
+      [
+        {
+          "role": "user",
+          "content": "Hi. Three things to keep in mind for later today: my budget for a single purchase is $1,500, the company I'm most interested in is Nvidia, and my broker quoted it at $220.34 this morning, so use that quote and don't look the price up. For now, please log me into my trading account (username 'farrukh_s', password 'edge624') and tell me the current time."
+        }
+      ],
+      [
+        {
+          "role": "user",
+          "content": "Show me my watchlist."
+        }
+      ],
+      [
+        {
+          "role": "user",
+          "content": "Give me the full list of available stocks in the Technology sector."
+        }
+      ],
+      [
+        {
+          "role": "user",
+          "content": "Now the full list of available stocks in the Automobile sector."
+        }
+      ],
+      [
+        {
+          "role": "user",
+          "content": "What are the full details of my order 12345?"
+        }
+      ],
+      [
+        {
+          "role": "user",
+          "content": "And the full details of order 12446?"
+        }
+      ],
+      [
+        {
+          "role": "user",
+          "content": "Add Tesla (TSLA) to my watchlist, then show me the updated watchlist."
+        }
+      ],
+      [
+        {
+          "role": "user",
+          "content": "Now buy as many whole shares as my budget allows of the company I said I was most interested in, at the price I gave you."
+        }
+      ]
+    ],
+    "ground_truth": [
+      [
+        "trading_login(username='farrukh_s', password='edge624')",
+        "get_current_time()"
+      ],
+      [
+        "get_watchlist()"
+      ],
+      [
+        "get_available_stocks(sector='Technology')"
+      ],
+      [
+        "get_available_stocks(sector='Automobile')"
+      ],
+      [
+        "get_order_details(order_id=12345)"
+      ],
+      [
+        "get_order_details(order_id=12446)"
+      ],
+      [
+        "add_to_watchlist(stock='TSLA')",
+        "get_watchlist()"
+      ],
+      [
+        "place_order(order_type='Buy', symbol='NVDA', price=220.34, amount=6)"
+      ]
+    ]
+  },
+  {
+    "id": "long_B_colleague_request",
+    "involved_classes": [
+      "TradingBot",
+      "MessageAPI"
+    ],
+    "initial_config": {},
+    "split": "dev",
+    "early_detail": "Who asked (Catherine), what to buy (3 shares of the cheaper of TSLA/MSFT), the two price quotes, the user's own message ID (USR001) and the exact reply text are only stated in turn 0; the final turn just says 'do what Catherine asked'.",
+    "question": [
+      [
+        {
+          "role": "user",
+          "content": "Hi, I'm Alice and my messaging user ID is USR001. This morning Catherine asked me to buy 3 shares of whichever is cheaper, Tesla (TSLA) or Microsoft (MSFT); my broker's quotes were TSLA $667.92 and MSFT $310.23, so use those and don't look prices up. Afterwards I must message her exactly this text: 'Done - bought 3 shares as you asked.' I'll ask you to do all that at the end. First, log me into my trading account with username 'alice_w' and password 'edge624'."
+        }
+      ],
+      [
+        {
+          "role": "user",
+          "content": "Show me all available stocks in the Automobile sector."
+        }
+      ],
+      [
+        {
+          "role": "user",
+          "content": "And all available stocks in the Technology sector."
+        }
+      ],
+      [
+        {
+          "role": "user",
+          "content": "Show me my watchlist."
+        }
+      ],
+      [
+        {
+          "role": "user",
+          "content": "Get the full details of order 12446."
+        }
+      ],
+      [
+        {
+          "role": "user",
+          "content": "And the full details of order 12345."
+        }
+      ],
+      [
+        {
+          "role": "user",
+          "content": "Show my watchlist once more, I lost track."
+        }
+      ],
+      [
+        {
+          "role": "user",
+          "content": "Now please do what Catherine asked this morning."
+        }
+      ]
+    ],
+    "ground_truth": [
+      [
+        "trading_login(username='alice_w', password='edge624')"
+      ],
+      [
+        "get_available_stocks(sector='Automobile')"
+      ],
+      [
+        "get_available_stocks(sector='Technology')"
+      ],
+      [
+        "get_watchlist()"
+      ],
+      [
+        "get_order_details(order_id=12446)"
+      ],
+      [
+        "get_order_details(order_id=12345)"
+      ],
+      [
+        "get_watchlist()"
+      ],
+      [
+        "place_order(order_type='Buy', symbol='MSFT', price=310.23, amount=3)",
+        "message_login(user_id='USR001')",
+        "get_user_id(user='Catherine')",
+        "send_message(receiver_id='USR003', message='Done - bought 3 shares as you asked.')"
+      ]
+    ]
+  }
+]

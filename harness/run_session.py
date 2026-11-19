@@ -19,19 +19,22 @@ Examples (from the repo root):
   python3 -m harness.run_session --task multi_turn_long_context_100 --oracle
   python3 -m harness.run_session --task multi_turn_long_context_100
   python3 -m harness.run_session --split dev --limit 3 --oracle
+  python3 -m harness.run_session --split custom --oracle   (our long tasks)
 """
 
 import argparse
 import json
 import os
 import time
+import urllib.error
 import urllib.request
 from datetime import datetime
 
-from harness.bfcl_env import Env, load_task, parse_call_string, states_match
+from harness.bfcl_env import Env, load_custom_tasks, load_task, parse_call_string, states_match
 from harness.llm_client import LlamaServerClient
 from harness.prompt import parse_tool_calls, render
 from harness.validity import check_call
+from tasks.checks import run_check
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -58,6 +61,7 @@ def run_task(task_id, schemas, args, log):
                                                          n_predict=args.n_predict)
     messages = []
     turn_results = []
+    overflow = False
     totals = {"calls": 0, "valid": 0, "prompt_tokens": 0, "prefill_ms": 0.0,
               "decode_ms": 0.0, "tool_ms": 0.0, "llm_calls": 0}
 
@@ -78,7 +82,16 @@ def run_task(task_id, schemas, args, log):
                     text = "Done."
                 rec["prompt_tokens"] = count_tokens(args.server, prompt)
             else:
-                out = client.complete(prompt)
+                try:
+                    out = client.complete(prompt)
+                except urllib.error.HTTPError as e:
+                    # llama-server refuses prompts longer than its context (-c 16384)
+                    rec["error"] = f"HTTP {e.code}: {e.read()[:300].decode(errors='replace')}"
+                    log.write(json.dumps(rec) + "\n")
+                    log.flush()
+                    overflow = True
+                    print(f"  ! server error at turn {turn} step {step}: {rec['error'][:120]}")
+                    break
                 text = out.pop("text")
                 rec.update(out)
                 totals["llm_calls"] += 1
@@ -116,14 +129,24 @@ def run_task(task_id, schemas, args, log):
         turn_results.append(ok)
         print(f"  turn {turn}: {'PASS' if ok else 'FAIL'}"
               + ("" if ok else f" (differs: {', '.join(diffs[:4])})"), flush=True)
+        if overflow:
+            break
 
     final_prompt = render(messages, schemas)
+    check_ok, check_msg = run_check(task_id, model_env)
+    n_turns = len(task["question"])
+    success = (len(turn_results) == n_turns and all(turn_results)
+               and check_ok is not False)
+    if check_ok is not None:
+        print(f"  functional check: {'PASS' if check_ok else 'FAIL'} - {check_msg}")
     summary = {
         "task": task_id,
         "mode": "oracle" if args.oracle else "model",
-        "turns": len(turn_results),
+        "turns": n_turns,
         "turns_passed": sum(turn_results),
-        "session_success": all(turn_results),
+        "session_success": success,
+        "functional_check": check_msg,
+        "context_overflow": overflow,
         "call_validity": round(totals["valid"] / totals["calls"], 3) if totals["calls"] else None,
         "final_context_chars": len(final_prompt),
         "final_context_tokens": count_tokens(args.server, final_prompt),
@@ -135,7 +158,9 @@ def run_task(task_id, schemas, args, log):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--task", help="one BFCL task id")
-    ap.add_argument("--split", choices=["dev", "test", "all"], help="run tasks from configs/bfcl_tasks.json")
+    ap.add_argument("--split", choices=["dev", "test", "all", "custom"],
+                    help="dev/test/all = BFCL tasks from configs/bfcl_tasks.json; "
+                         "custom = our long tasks from tasks/long_tasks.json")
     ap.add_argument("--limit", type=int, default=0)
     ap.add_argument("--oracle", action="store_true")
     ap.add_argument("--server", default="http://127.0.0.1:8080")
@@ -151,6 +176,8 @@ def main():
         schemas = json.load(f)
     if args.task:
         ids = [args.task]
+    elif args.split == "custom":
+        ids = [t["id"] for t in load_custom_tasks()]
     else:
         with open(os.path.join(ROOT, "configs", "bfcl_tasks.json")) as f:
             tasks = json.load(f)["tasks"]
